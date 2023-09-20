@@ -1,3 +1,5 @@
+initializeApp()
+
 const battery =
     [{
         "batteryName": "WKL-78",
@@ -159,4 +161,32 @@ const camera =
 ;
 
 class Camera {
+}
+
+function initializeApp() {
+    const target = document.getElementById("target");
+    target.innerHTML = 
+    `
+        <div class="bg-primary text-white text-center py-2 mb-3">
+            <h1>Battery Finder Program</h1>
+        </div>
+        <div class="mx-auto col-10">
+            <div class="mb-3">
+                <p class="mb-1">Step1: Selct your brand</p>
+                <select name="brand" id="brand"></select>
+            </div>
+            <div class="mb-3">
+                <p class="mb-1">Step2: Select your model</p>
+                <select name="model" id="model"></select>
+            </div>
+            <div class="mb-3">
+                <p class="mb-1">Step3: Input accessory power consumption</p>
+                <input type="number" id="power" value="55" min="0" max="100">
+            </div>
+            <div class="mb-3">
+                <p class="mb-1">Step4: Choose your battery</p>
+                <div id="battery"></div>
+            </div>
+        </div>
+    `;
 }
