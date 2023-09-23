@@ -87,6 +87,36 @@ class Battery {
         this.maxDraw = maxDraw;
         this.endVoltage = endVoltage;
     }
+
+    // return watt
+    maxWatt() {
+        return this.capacityAh * this.voltage;
+    }
+
+    // minimum voltage that battery can be used safely
+    endWatt() {
+        return this.endVoltage * this.maxDraw;
+    }
+
+    limitedHour(sumWatt) {
+        return Math.round((this.maxWatt() / sumWatt) * 10) / 10;
+    }
+
+    createBatteryEle(sumWatt) {
+        let batteryDiv = document.createElement("div");
+        let battName = document.createElement("p");
+        let battTime = document.createElement("p");
+
+        batteryDiv.classList.add("d-flex", "justify-content-between", "align-items-center", "border", "boder-secondary", "bg-light", "px-2", "pt-2"); 
+        battName.classList.add("bold");
+
+        battName.innerHTML = this.batteryName;
+        battTime.innerHTML = "Estimate " + this.limitedHour(sumWatt) + " hours";
+
+        batteryDiv.append(battName);
+        batteryDiv.append(battTime);
+        return batteryDiv;
+    }
 }
 
 const batteryObj = [];
@@ -200,19 +230,47 @@ let brandName = document.getElementById("brand");
 for (let i=0; i<brandArr.length; i++) {
     let brandOption = document.createElement("option");
     brandOption.innerHTML = brandArr[i];
-    brandOption.value = brandArr[i];
+    brandOption.value = i;
     brandName.append(brandOption);
 }
+
+brandName.addEventListener("click", e => {
+    brandEle = e.target.value;
+    modelName.innerHTML = "";
+    modelSelection();
+})
 
 // model
 let modelName = document.getElementById("model");
 let brandEle = brandArr[0];
-for (let i=0; i<camera.length; i++) {
-    if (brandEle === camera[i]["brand"]) {
-        let modelOption = document.createElement("option");
-        modelOption.innerHTML = camera[i]["model"];
-        modelOption.value = camera[i]["model"];
-        modelName.append(modelOption);
+function modelSelection() {
+    for (let i=0; i<camera.length; i++) {
+        if (brandEle === camera[i]["brand"]) {
+            let modelOption = document.createElement("option");
+            modelOption.innerHTML = camera[i]["model"];
+            modelOption.value = i;
+            modelName.append(modelOption);
+        }
+    }
+}
+modelSelection();
+modelName.addEventListener("change", updateBatteries);
+
+// battery
+let batteryContainer = document.getElementById("battery");
+let inputPowerConsumption = document.getElementById("power");
+inputPowerConsumption.addEventListener("change", updateBatteries);
+for (let i=0; i<batteryObj.length; i++) {
+    batteryContainer.append(batteryObj[i].createBatteryEle(cameraObj[modelName.value].powerConsumptionWh + parseInt(inputPowerConsumption.value)));
+}
+
+function updateBatteries() {
+    let sumWatt = cameraObj[modelName.value].powerConsumptionWh + parseInt(inputPowerConsumption.value);
+    batteryContainer.innerHTML = "";
+    for (let i=0; i<batteryObj.length; i++) {
+        if (sumWatt < batteryObj[i].endWatt()) {
+            batteryContainer.append(batteryObj[i].createBatteryEle(sumWatt));
+        }
     }
 }
 
