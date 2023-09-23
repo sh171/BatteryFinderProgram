@@ -80,6 +80,18 @@ const battery =
     }];
 
 class Battery {
+    constructor(batteryName, capacityAh, voltage, maxDraw, endVoltage) {
+        this.batteryName = batteryName;
+        this.capacityAh = capacityAh;
+        this.voltage = voltage;
+        this.maxDraw = maxDraw;
+        this.endVoltage = endVoltage;
+    }
+}
+
+const batteryObj = [];
+for (let i=0; i<battery.length; i++) {
+    batteryObj.push(new Battery(battery[i]["batteryName"], battery[i]["capacityAh"], battery[i]["voltage"], battery[i]["maxDraw"], battery[i]["endVoltage"]));
 }
 
 const camera =
@@ -161,6 +173,47 @@ const camera =
 ;
 
 class Camera {
+    constructor(brand, model, powerConsumptionWh) {
+        this.brand = brand;
+        this.model = model;
+        this.powerConsumptionWh = powerConsumptionWh;
+    }
+}
+
+const cameraObj = [];
+for (let i=0; i<camera.length; i++) {
+    cameraObj.push(new Camera(camera[i]["brand"], camera[i]["model"], camera[i]["powerConsumptionWh"]));
+}
+
+let brandDict = {};
+for (let i=0; i<cameraObj.length; i++) {
+    brandDict[cameraObj[i].brand] = 0;
+}
+
+const brandArr = [];
+for (k in brandDict){
+    brandArr.push(k);
+}
+
+// brand
+let brandName = document.getElementById("brand");
+for (let i=0; i<brandArr.length; i++) {
+    let brandOption = document.createElement("option");
+    brandOption.innerHTML = brandArr[i];
+    brandOption.value = brandArr[i];
+    brandName.append(brandOption);
+}
+
+// model
+let modelName = document.getElementById("model");
+let brandEle = brandArr[0];
+for (let i=0; i<camera.length; i++) {
+    if (brandEle === camera[i]["brand"]) {
+        let modelOption = document.createElement("option");
+        modelOption.innerHTML = camera[i]["model"];
+        modelOption.value = camera[i]["model"];
+        modelName.append(modelOption);
+    }
 }
 
 function initializeApp() {
