@@ -230,7 +230,7 @@ let brandName = document.getElementById("brand");
 for (let i=0; i<brandArr.length; i++) {
     let brandOption = document.createElement("option");
     brandOption.innerHTML = brandArr[i];
-    brandOption.value = i;
+    brandOption.value = brandArr[i];
     brandName.append(brandOption);
 }
 
