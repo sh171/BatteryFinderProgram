@@ -1,10 +1,15 @@
 # Battery Finder Program
 
-This project suggests the best battery for your camera from the list.
+# Overview
+Looking for the ideal battery for your camera? The Battery Finder Program streamlines this process by suggesting the best-suited battery from an extensive list based on your specific requirements.
 
 ## Description
+The Battery Finder Program is designed with user-centricity in mind:
 
-The application allows you to select a brand, a model and accessory power consumption in between 0 and 100 watt.
-The purpose is to list the batteries that are compatible with the selected camera and display the estimated hours.
+- Brand Selection: Choose from a comprehensive list of camera brands.
+- Model Specification: Pinpoint your camera's specific model for precise compatibility.
+- Accessory Power Consumption: Define the power consumption of your accessories, ranging from 0 to 100 watts.
+  
+Once the criteria are set, the program swiftly enumerates batteries compatible with the chosen camera model, also providing an estimate of the battery life in hours.
 
 Project link: https://sh171.github.io/BatteryFinderProgram/
